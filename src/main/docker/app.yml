@@ -1,0 +1,14 @@
+version: '2'
+services:
+    grocery4j-app:
+        image: grocery4j
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://grocery4j-mysql:3306/grocery4j?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    grocery4j-mysql:
+        extends:
+            file: mysql.yml
+            service: grocery4j-mysql
