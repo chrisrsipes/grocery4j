@@ -97,6 +97,7 @@ jhipster:
     ribbon:
         display-on-active-profiles: dev
 
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
