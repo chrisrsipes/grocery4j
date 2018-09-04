@@ -59,6 +59,15 @@ public class ItemResource extends BaseResource<Item, ItemDto, ItemService> {
         return response;
     }
 
+//    @Conjunction(value = {
+//                                         @Or({
+//                                             @Spec(path = "name", params = "keyword", spec = Like.class),
+//                                             @Spec(path = "description", params = "keyword", spec = Like.class)
+//                                         })
+//                                     }, and = {
+//                                         @Spec(path = "category", params = "category", spec = Equal.class)
+//                                     }) Specification<Item> specification
+
     /**
      * GET /items -> gets all items
      *
@@ -73,16 +82,9 @@ public class ItemResource extends BaseResource<Item, ItemDto, ItemService> {
     public ResponseEntity<?> findAll(@RequestParam(value = "start", required = false) Integer offset,
                                      @RequestParam(value = "length", required = false) Integer limit,
                                      @RequestParam(value = "draw", required = false) Integer draw,
-                                     @RequestParam(value = "sorts", required = false) List<String> sortStrings,
-                                     @Conjunction(value = {
-                                         @Or({
-                                             @Spec(path = "name", params = "keyword", spec = Like.class),
-                                             @Spec(path = "description", params = "keyword", spec = Like.class)
-                                         })
-                                     }, and = {
-                                         @Spec(path = "category", params = "category", spec = Equal.class)
-                                     }) Specification<Item> specification) throws URISyntaxException {
-        return super.abstractFindAll(offset, limit, draw, sortStrings, specification);
+                                     @RequestParam(value = "sorts", required = false) List<String> sortStrings
+                                     ) throws URISyntaxException {
+        return super.abstractFindAll(offset, limit, draw, sortStrings, null);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.crs.grocery4j.web.rest;
 
 import com.crs.grocery4j.domain.database.AbstractBaseEntity;
 import com.crs.grocery4j.domain.dto.AbstractBaseDto;
+import com.crs.grocery4j.domain.dto.ErrorDto;
 import com.crs.grocery4j.domain.dto.ResponseDto;
 import com.crs.grocery4j.service.domain.RestService;
 import com.crs.grocery4j.web.rest.util.PaginationUtil;
@@ -178,10 +179,10 @@ public abstract class BaseResource<Entity extends AbstractBaseEntity, Dto extend
 
             }
             else {
-                response =  ResponseEntity.badRequest().build();
+                response =  ResponseEntity.badRequest().body(new ErrorDto("Entity not defined, or entity does not have an id"));
             }
         }catch(Exception e){
-            response = ResponseEntity.badRequest().body(e);
+            response = ResponseEntity.badRequest().body(new ErrorDto(e));
         }
 
         return response;

@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
  */
 
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "item")
 public class Item extends AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +28,14 @@ public class Item extends AbstractBaseEntity {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
+    }
+
+    public Item() {
+        super();
+    }
+
+    public Item(Item item ) {
+        super(item);
     }
 
     public String getName() {

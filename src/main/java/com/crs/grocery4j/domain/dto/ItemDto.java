@@ -14,7 +14,12 @@ public class ItemDto extends AbstractBaseDto {
 
     private String category;
 
+    public ItemDto() {
+        super();
+    }
+
     public ItemDto(Item item) {
+        super(item);
         this.name = item.getName();
         this.description = item.getDescription();
         this.category = item.getCategory();
@@ -42,5 +47,14 @@ public class ItemDto extends AbstractBaseDto {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Item toEntity(Item item) {
+        super.toEntity(item);
+        item.setName(this.getName());
+        item.setCategory(this.getCategory());
+        item.setDescription(this.getDescription());
+
+        return item;
     }
 }

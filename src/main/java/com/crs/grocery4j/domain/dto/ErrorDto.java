@@ -9,6 +9,11 @@ public class ErrorDto {
 
     private String cause;
 
+    public ErrorDto(Exception e) {
+        this.message = e.getMessage();
+        this.cause = e.getCause().toString();
+    }
+
     public ErrorDto(String message) {
         this.message = message;
     }

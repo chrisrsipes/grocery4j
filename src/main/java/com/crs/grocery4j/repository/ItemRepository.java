@@ -21,7 +21,6 @@ import java.util.Optional;
  * Spring Data JPA repository for the User entity.
  */
 @Repository
-@Transactional(readOnly = true)
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
 }
