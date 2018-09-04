@@ -17,7 +17,7 @@ import java.util.List;
  * Created by crs on 9/3/18.
  */
 @Service
-public class GroceryItemService implements RestService<GroceryListItem> {
+public class GroceryListItemService implements RestService<GroceryListItem> {
 
     @Inject
     private GroceryListItemRepository groceryListItemRepository;
