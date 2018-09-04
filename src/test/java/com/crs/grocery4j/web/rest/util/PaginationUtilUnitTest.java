@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import org.springframework.http.HttpHeaders;
 public class PaginationUtilUnitTest {
 
     @Test
-    public void generatePaginationHttpHeadersTest() {
+    public void generatePaginationHttpHeadersTest() throws Exception {
         String baseUrl = "/api/_search/example";
         List<String> content = new ArrayList<>();
         Page<String> page = new PageImpl<>(content,new PageRequest(6, 50),400L);

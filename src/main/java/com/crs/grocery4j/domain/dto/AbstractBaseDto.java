@@ -1,10 +1,10 @@
 package com.crs.grocery4j.domain.dto;
 
 import com.crs.grocery4j.domain.database.AbstractBaseEntity;
+import com.crs.grocery4j.service.util.PlainDateTimeDeserializer;
+import com.crs.grocery4j.service.util.PlainDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.riptide.reflection.services.utility.PlainDateTimeDeserializer;
-import com.riptide.reflection.services.utility.PlainDateTimeSerializer;
 import org.joda.time.DateTime;
 import java.io.Serializable;
 

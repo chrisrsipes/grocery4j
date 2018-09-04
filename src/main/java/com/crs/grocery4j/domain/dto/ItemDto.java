@@ -6,7 +6,7 @@ import com.crs.grocery4j.domain.database.Item;
  * Created by crs on 7/6/18.
  */
 
-public class ItemDto {
+public class ItemDto extends AbstractBaseDto {
 
     private String name;
 
