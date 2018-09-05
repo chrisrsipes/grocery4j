@@ -33,6 +33,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class ItemResource extends BaseResource<Item, ItemDto, ItemService> {
 
+    @Inject
+    private ItemService service;
+
     /**
      * POST /items -> Create a new target.
      *

@@ -4,6 +4,7 @@ import com.crs.grocery4j.domain.database.GroceryListItem;
 import com.crs.grocery4j.domain.database.Item;
 import com.crs.grocery4j.repository.GroceryListItemRepository;
 import com.crs.grocery4j.repository.ItemRepository;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

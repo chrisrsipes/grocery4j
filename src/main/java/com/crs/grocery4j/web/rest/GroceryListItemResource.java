@@ -12,11 +12,14 @@ import com.crs.grocery4j.service.domain.ItemService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URISyntaxException;
@@ -29,6 +32,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class GroceryListItemResource extends BaseResource<GroceryListItem, GroceryListItemDto, GroceryListItemService> {
+
+    @Inject
+    private GroceryListItemService service;
 
     /**
      * POST /groceryListItems -> Create a new target.
@@ -131,10 +137,10 @@ public class GroceryListItemResource extends BaseResource<GroceryListItem, Groce
      */
     @ApiOperation(value = "get", notes = "Soft deletes the target with the given target id. Secured.", produces = "application/json")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok", response = ItemDto.class), @ApiResponse(code = 401, message = "Unauthorized"), @ApiResponse(code = 500, message = "Internal server error", response = ErrorDto.class) })
-    @RequestMapping(value = "/items/{itemId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/groceryListItems/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable("itemId") Long itemId) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long itemId) {
         return super.abstractDelete(itemId);
     }
 
@@ -184,4 +190,5 @@ public class GroceryListItemResource extends BaseResource<GroceryListItem, Groce
 
         return recordDtos;
     }
+
 }

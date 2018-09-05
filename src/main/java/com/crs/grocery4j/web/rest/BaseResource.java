@@ -26,7 +26,6 @@ public abstract class BaseResource<Entity extends AbstractBaseEntity, Dto extend
     @Inject
     protected Service service;
 
-
     protected Sort getSort(List<String> sortStrings) {
 
         Sort sort;

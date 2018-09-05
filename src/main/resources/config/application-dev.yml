@@ -37,9 +37,9 @@ spring:
                 useServerPrepStmts: true
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        generate-ddl: true
-        hibernate:
-            ddl-auto: create
+#        generate-ddl: true
+#        hibernate:
+#            ddl-auto: create
         database: MYSQL
         show-sql: true
         properties:
