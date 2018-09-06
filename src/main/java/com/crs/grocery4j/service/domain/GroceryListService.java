@@ -1,6 +1,7 @@
 package com.crs.grocery4j.service.domain;
 
 import com.crs.grocery4j.domain.database.GroceryList;
+import com.crs.grocery4j.domain.database.GroceryListItem;
 import com.crs.grocery4j.repository.GroceryListRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,4 +65,5 @@ public class GroceryListService implements RestService<GroceryList> {
 
         this.groceryListRepository.delete(entity.getId());
     }
+
 }

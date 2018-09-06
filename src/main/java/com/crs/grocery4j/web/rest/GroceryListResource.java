@@ -3,10 +3,7 @@ package com.crs.grocery4j.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.crs.grocery4j.domain.database.GroceryList;
 import com.crs.grocery4j.domain.database.GroceryListItem;
-import com.crs.grocery4j.domain.dto.ErrorDto;
-import com.crs.grocery4j.domain.dto.GroceryListDto;
-import com.crs.grocery4j.domain.dto.GroceryListItemDto;
-import com.crs.grocery4j.domain.dto.ItemDto;
+import com.crs.grocery4j.domain.dto.*;
 import com.crs.grocery4j.exception.CanNotBeCreatedException;
 import com.crs.grocery4j.service.domain.GroceryListItemService;
 import com.crs.grocery4j.service.domain.GroceryListService;
@@ -24,6 +21,7 @@ import javax.validation.Valid;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by crs on 9/3/18.
@@ -34,6 +32,9 @@ public class GroceryListResource extends BaseResource<GroceryList, GroceryListDt
 
     @Inject
     private GroceryListService service;
+
+    @Inject
+    private GroceryListItemService groceryListItemService;
 
     /**
      * POST /groceryLists -> Create a new target.
@@ -142,6 +143,46 @@ public class GroceryListResource extends BaseResource<GroceryList, GroceryListDt
     public ResponseEntity<?> delete(@PathVariable("id") Long itemId) {
         return super.abstractDelete(itemId);
     }
+
+    /**
+     * GET /groceryLists/{groceryListId}/items -> gets the target by the target id.
+     *
+     * @param id the id of the target
+     * @return target that has a matching id
+     */
+    @ApiOperation(value = "get", notes = "Gets the target grocery list's items with the given target id. Secured.", produces = "application/json")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok", response = GroceryListDto.class), @ApiResponse(code = 401, message = "Unauthorized"), @ApiResponse(code = 500, message = "Internal server error", response = ErrorDto.class) })
+    @RequestMapping(value = "/groceryLists/{id}/items", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<?> getGroceryListItems(@PathVariable("id") Long id) {
+        ResponseEntity response;
+
+        try{
+            List<GroceryListItem> groceryListItems = this.groceryListItemService.findAllByGroceryListId(id);
+
+            if (groceryListItems != null) {
+                List<GroceryListItemDto> groceryListItemDtos = groceryListItems
+                    .parallelStream()
+                    .map(i -> new GroceryListItemDto(i))
+                    .collect(Collectors.toList());
+
+                ResponseDto responseDto = new ResponseDto();
+                responseDto.setData(groceryListItemDtos);
+
+                response = ResponseEntity.ok().body(responseDto);
+            }
+            else {
+                response = ResponseEntity.noContent().build();
+            }
+        }catch(Exception e)
+        {
+            response = ResponseEntity.badRequest().body(e);
+        }
+
+        return response;
+    }
+
 
     @Override
     protected Sort.Direction getDefaultSortDirection() {

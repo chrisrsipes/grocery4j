@@ -47,6 +47,10 @@ public class GroceryListItemService implements RestService<GroceryListItem> {
         return this.groceryListItemRepository.findAll(specification, sort);
     }
 
+    public List<GroceryListItem> findAllByGroceryListId(Long groceryListId) {
+        return this.groceryListItemRepository.findAllByGroceryList_Id(groceryListId);
+    }
+
     @Override
     public GroceryListItem create(GroceryListItem entity) {
         // get actual Item by id
