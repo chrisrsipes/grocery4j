@@ -1,5 +1,6 @@
 package com.crs.grocery4j.service.domain;
 
+import com.crs.grocery4j.domain.database.GroceryList;
 import com.crs.grocery4j.domain.database.GroceryListItem;
 import com.crs.grocery4j.domain.database.Item;
 import com.crs.grocery4j.exception.CanNotBeCreatedException;
@@ -23,6 +24,9 @@ public class GroceryListItemService implements RestService<GroceryListItem> {
 
     @Inject
     private GroceryListItemRepository groceryListItemRepository;
+
+    @Inject
+    private GroceryListService groceryListService;
 
     @Inject
     private ItemService itemService;
@@ -55,8 +59,10 @@ public class GroceryListItemService implements RestService<GroceryListItem> {
     public GroceryListItem create(GroceryListItem entity) {
         // get actual Item by id
 
-        if (entity == null || entity.getItem() == null || entity.getItem().getId() == null) {
-            throw new CanNotBeCreatedException("Entity is invalid or is not related to a valid item");
+        if (entity == null) {
+            throw new CanNotBeCreatedException("Entity is invalid");
+        } else if (entity.getItem() == null || entity.getItem().getId() == null) {
+            throw new CanNotBeCreatedException("Entity is not related to a valid item");
         }
 
         Item relatedItem = this.itemService.findById(entity.getItem().getId());
@@ -66,6 +72,19 @@ public class GroceryListItemService implements RestService<GroceryListItem> {
         }
 
         entity.setItem(relatedItem);
+
+        GroceryList relatedList;
+        if (entity.getGroceryList() == null || entity.getGroceryList().getId() == null) {
+            relatedList = this.groceryListService.getDefaultGroceryList(true);
+        } else {
+            relatedList = this.groceryListService.findById(entity.getGroceryList().getId());
+
+            if (relatedList == null) {
+                throw new CanNotBeCreatedException("Related grocery list could not be found");
+            }
+        }
+
+        entity.setGroceryList(relatedList);
 
         return this.groceryListItemRepository.save(entity);
     }
