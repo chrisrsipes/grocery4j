@@ -2,26 +2,24 @@ package com.crs.grocery4j.domain.database;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by crs on 9/5/18.
  */
+@Entity
+@Table(name = "grocery_list")
 public class GroceryList extends AbstractBaseEntity {
+
+    private String name;
 
     private boolean completed;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "due_date")
     private Date dueDate;
-
-    @OneToMany(targetEntity = GroceryListItem.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<GroceryListItem> groceryListItems;
 
     public GroceryList() {
         super();
@@ -31,7 +29,18 @@ public class GroceryList extends AbstractBaseEntity {
         super(groceryList);
         this.completed = groceryList.getCompleted();
         this.dueDate = groceryList.getDueDate();
-        this.groceryListItems = groceryList.getGroceryListItems();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isCompleted() {
+        return completed;
     }
 
     public boolean getCompleted() {
@@ -48,13 +57,5 @@ public class GroceryList extends AbstractBaseEntity {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public List<GroceryListItem> getGroceryListItems() {
-        return groceryListItems;
-    }
-
-    public void setGroceryListItems(List<GroceryListItem> groceryListItems) {
-        this.groceryListItems = groceryListItems;
     }
 }

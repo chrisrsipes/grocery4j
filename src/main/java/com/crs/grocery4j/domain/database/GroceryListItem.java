@@ -17,6 +17,9 @@ public class GroceryListItem extends AbstractBaseEntity {
     @ManyToOne(targetEntity = Item.class, cascade = CascadeType.DETACH)
     private Item item;
 
+    @ManyToOne(targetEntity = GroceryList.class, cascade = CascadeType.DETACH)
+    private GroceryList groceryList;
+
     private Double quantity;
 
     private boolean completed;
@@ -34,6 +37,7 @@ public class GroceryListItem extends AbstractBaseEntity {
         this.item = groceryListItem.getItem();
         this.quantity = groceryListItem.getQuantity();
         this.completed = groceryListItem.getCompleted();
+        this.groceryList = groceryListItem.getGroceryList();
     }
 
     public Item getItem() {
@@ -42,6 +46,14 @@ public class GroceryListItem extends AbstractBaseEntity {
 
     public void setItem(Item item) {
         this.item = item;
+    }
+
+    public GroceryList getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(GroceryList groceryList) {
+        this.groceryList = groceryList;
     }
 
     public Double getQuantity() {

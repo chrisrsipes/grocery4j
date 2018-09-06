@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 public class GroceryListDto extends AbstractBaseDto {
 
+    private String name;
+
     private boolean completed;
 
     @JsonSerialize(using = PlainDateTimeSerializer.class)
@@ -37,28 +39,13 @@ public class GroceryListDto extends AbstractBaseDto {
         if (groceryList != null) {
             this.completed = groceryList.getCompleted();
             this.dueDate = groceryList.getDueDate();
-            this.groceryListItems = groceryList.getGroceryListItems()
-                .stream()
-                .map(item -> new GroceryListItemDto(item))
-                .collect(Collectors.toList());
         }
     }
 
     public GroceryList toEntity(GroceryList groceryList) {
         super.toEntity(groceryList);
-
         groceryList.setCompleted(this.getCompleted());
         groceryList.setDueDate(this.getDueDate());
-
-        if (this.getGroceryListItems() != null) {
-            List<GroceryListItem> groceryListItems = this.getGroceryListItems()
-                .parallelStream()
-                .map(item -> item.toEntity(new GroceryListItem()))
-                .collect(Collectors.toList());
-
-            groceryList.setGroceryListItems(groceryListItems);
-        }
-
         return groceryList;
     }
 
@@ -85,4 +72,13 @@ public class GroceryListDto extends AbstractBaseDto {
     public void setGroceryListItems(List<GroceryListItemDto> groceryListItems) {
         this.groceryListItems = groceryListItems;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
