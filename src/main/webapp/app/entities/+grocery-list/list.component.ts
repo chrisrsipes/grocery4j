@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
-import {Principal} from "../../shared/auth/principal.service";
-import {LoginModalService} from "../../shared/login/login-modal.service";
-
+import {GroceryListService} from '../../shared/auth/grocery-list.service';
 
 @Component({
-    selector: 'grocery-list-list',
+    selector: 'jhi-grocery-list-list',
     templateUrl: './list.component.html'
 })
 export class GroceryListListComponent implements OnInit {
 
-    constructor() {
+    public groceryLists: any[];
+
+    constructor(private groceryListService: GroceryListService) {
     }
 
     ngOnInit() {
-        console.log('list component initialized');
+        this.groceryListService
+            .list()
+            .subscribe((res) => {
+                this.groceryLists = res.data;
+            });
     }
 
 }

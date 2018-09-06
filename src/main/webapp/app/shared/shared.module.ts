@@ -15,6 +15,7 @@ import {
     HasAnyAuthorityDirective,
     JhiLoginModalComponent
 } from './';
+import {GroceryListService} from './auth/grocery-list.service';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {
     ],
     providers: [
         LoginService,
+        GroceryListService,
         LoginModalService,
         AccountService,
         StateStorageService,
