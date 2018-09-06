@@ -19,6 +19,8 @@ public class GroceryListItem extends AbstractBaseEntity {
 
     private Double quantity;
 
+    private boolean completed;
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -31,12 +33,7 @@ public class GroceryListItem extends AbstractBaseEntity {
         super(groceryListItem);
         this.item = groceryListItem.getItem();
         this.quantity = groceryListItem.getQuantity();
-    }
-
-    public GroceryListItem(Item item, Double quantity) {
-        super();
-        this.item = item;
-        this.quantity = quantity;
+        this.completed = groceryListItem.getCompleted();
     }
 
     public Item getItem() {
@@ -53,5 +50,13 @@ public class GroceryListItem extends AbstractBaseEntity {
 
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }

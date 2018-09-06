@@ -13,6 +13,8 @@ public class GroceryListItemDto extends AbstractBaseDto {
 
     private Double quantity;
 
+    private boolean completed;
+
     public GroceryListItemDto() {
         super();
     }
@@ -23,6 +25,7 @@ public class GroceryListItemDto extends AbstractBaseDto {
         if (groceryListItem != null) {
             this.item = new ItemDto(groceryListItem.getItem());
             this.quantity = groceryListItem.getQuantity();
+            this.completed = groceryListItem.getCompleted();
         }
     }
 
@@ -33,6 +36,7 @@ public class GroceryListItemDto extends AbstractBaseDto {
             groceryListItem.setItem(this.getItem().toEntity(new Item()));
         }
 
+        groceryListItem.setCompleted(this.getCompleted());
         groceryListItem.setQuantity(this.getQuantity());
 
         return groceryListItem;
@@ -52,5 +56,13 @@ public class GroceryListItemDto extends AbstractBaseDto {
 
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
+    }
+
+    public boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 }
