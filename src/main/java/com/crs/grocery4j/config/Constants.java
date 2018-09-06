@@ -14,6 +14,10 @@ public final class Constants {
 
     public static final String APP_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
+    public static final String DEFAULT_GROCERY_LIST_NAME = "Unassigned";
+
+    public static final String DEFAULT_NEW_GROCERY_LIST_NAME = "New Grocery List";
+
     private Constants() {
     }
 }

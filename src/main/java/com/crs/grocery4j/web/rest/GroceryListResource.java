@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -35,6 +36,12 @@ public class GroceryListResource extends BaseResource<GroceryList, GroceryListDt
 
     @Inject
     private GroceryListItemService groceryListItemService;
+
+    @PostConstruct
+    @Transactional
+    public void postConstruct() {
+        this.service.createDefaultGroceryListIfNotExists();
+    }
 
     /**
      * POST /groceryLists -> Create a new target.

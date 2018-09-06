@@ -6,10 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Spring Data JPA repository for the User entity.
  */
 @Repository
 public interface GroceryListRepository extends JpaRepository<GroceryList, Long>, JpaSpecificationExecutor<GroceryList> {
+
+    List<GroceryList> findAllByName(String name);
 
 }
