@@ -39,11 +39,13 @@ public class GroceryListDto extends AbstractBaseDto {
         if (groceryList != null) {
             this.completed = groceryList.getCompleted();
             this.dueDate = groceryList.getDueDate();
+            this.name = groceryList.getName();
         }
     }
 
     public GroceryList toEntity(GroceryList groceryList) {
         super.toEntity(groceryList);
+        groceryList.setName(this.getName());
         groceryList.setCompleted(this.getCompleted());
         groceryList.setDueDate(this.getDueDate());
         return groceryList;
