@@ -1,5 +1,6 @@
 package com.crs.grocery4j.domain.dto;
 
+import com.crs.grocery4j.domain.database.GroceryList;
 import com.crs.grocery4j.domain.database.GroceryListItem;
 import com.crs.grocery4j.domain.database.Item;
 
@@ -9,11 +10,14 @@ import com.crs.grocery4j.domain.database.Item;
 
 public class GroceryListItemDto extends AbstractBaseDto {
 
-    private ItemDto item;
 
     private Double quantity;
 
     private boolean completed;
+
+    private ItemDto item;
+
+    private GroceryListDto groceryList;
 
     public GroceryListItemDto() {
         super();
@@ -23,9 +27,16 @@ public class GroceryListItemDto extends AbstractBaseDto {
         super(groceryListItem);
 
         if (groceryListItem != null) {
-            this.item = new ItemDto(groceryListItem.getItem());
             this.quantity = groceryListItem.getQuantity();
             this.completed = groceryListItem.getCompleted();
+
+            if (groceryListItem.getItem() != null) {
+                this.item = new ItemDto(groceryListItem.getItem());
+            }
+
+            if (groceryListItem.getGroceryList() != null) {
+                this.groceryList = new GroceryListDto(groceryListItem.getGroceryList());
+            }
         }
     }
 
@@ -34,6 +45,10 @@ public class GroceryListItemDto extends AbstractBaseDto {
 
         if (this.getItem() != null) {
             groceryListItem.setItem(this.getItem().toEntity(new Item()));
+        }
+
+        if (this.getGroceryList() != null) {
+            groceryListItem.setGroceryList(this.getGroceryList().toEntity(new GroceryList()));
         }
 
         groceryListItem.setCompleted(this.getCompleted());
@@ -64,5 +79,13 @@ public class GroceryListItemDto extends AbstractBaseDto {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public GroceryListDto getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(GroceryListDto groceryList) {
+        this.groceryList = groceryList;
     }
 }

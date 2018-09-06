@@ -4,6 +4,7 @@ import com.crs.grocery4j.domain.database.GroceryList;
 import com.crs.grocery4j.domain.database.GroceryListItem;
 import com.crs.grocery4j.domain.database.Item;
 import com.crs.grocery4j.exception.CanNotBeCreatedException;
+import com.crs.grocery4j.exception.CanNotBeUpdatedException;
 import com.crs.grocery4j.repository.GroceryListItemRepository;
 import com.crs.grocery4j.repository.ItemRepository;
 import org.springframework.cache.annotation.EnableCaching;
@@ -92,9 +93,32 @@ public class GroceryListItemService implements RestService<GroceryListItem> {
     @Override
     public GroceryListItem update(GroceryListItem entity) {
 
-        if (entity.getId() == null) {
-            return null;
+        if (entity == null || entity.getId() == null) {
+            throw new CanNotBeUpdatedException("Entity is invalid");
+        } else if (entity.getItem() == null || entity.getItem().getId() == null) {
+            throw new CanNotBeCreatedException("Entity is not related to a valid item");
         }
+
+        Item relatedItem = this.itemService.findById(entity.getItem().getId());
+
+        if (relatedItem == null) {
+            throw new CanNotBeCreatedException("Related item could not be found");
+        }
+
+        entity.setItem(relatedItem);
+
+        GroceryList relatedList;
+        if (entity.getGroceryList() == null || entity.getGroceryList().getId() == null) {
+            relatedList = this.groceryListService.getDefaultGroceryList(true);
+        } else {
+            relatedList = this.groceryListService.findById(entity.getGroceryList().getId());
+
+            if (relatedList == null) {
+                throw new CanNotBeCreatedException("Related grocery list could not be found");
+            }
+        }
+
+        entity.setGroceryList(relatedList);
 
         return this.groceryListItemRepository.save(entity);
     }
