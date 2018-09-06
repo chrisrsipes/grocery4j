@@ -9,7 +9,7 @@ import com.crs.grocery4j.domain.database.Item;
 
 public class GroceryListItemDto extends AbstractBaseDto {
 
-    private Item item;
+    private ItemDto item;
 
     private Double quantity;
 
@@ -19,23 +19,30 @@ public class GroceryListItemDto extends AbstractBaseDto {
 
     public GroceryListItemDto(GroceryListItem groceryListItem) {
         super(groceryListItem);
-        this.item = groceryListItem.getItem();
-        this.quantity = groceryListItem.getQuantity();
+
+        if (groceryListItem != null) {
+            this.item = new ItemDto(groceryListItem.getItem());
+            this.quantity = groceryListItem.getQuantity();
+        }
     }
 
     public GroceryListItem toEntity(GroceryListItem groceryListItem) {
         super.toEntity(groceryListItem);
-        groceryListItem.setItem(this.getItem());
+
+        if (this.getItem() != null) {
+            groceryListItem.setItem(this.getItem().toEntity(new Item()));
+        }
+
         groceryListItem.setQuantity(this.getQuantity());
 
         return groceryListItem;
     }
 
-    public Item getItem() {
+    public ItemDto getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(ItemDto item) {
         this.item = item;
     }
 

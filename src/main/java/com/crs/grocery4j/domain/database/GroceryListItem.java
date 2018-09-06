@@ -14,7 +14,7 @@ public class GroceryListItem extends AbstractBaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(targetEntity = Item.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Item.class, cascade = CascadeType.DETACH)
     private Item item;
 
     private Double quantity;

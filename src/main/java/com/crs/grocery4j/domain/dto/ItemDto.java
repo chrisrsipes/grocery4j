@@ -20,9 +20,12 @@ public class ItemDto extends AbstractBaseDto {
 
     public ItemDto(Item item) {
         super(item);
-        this.name = item.getName();
-        this.description = item.getDescription();
-        this.category = item.getCategory();
+
+        if (item != null) {
+            this.name = item.getName();
+            this.description = item.getDescription();
+            this.category = item.getCategory();
+        }
     }
 
     public String getName() {
